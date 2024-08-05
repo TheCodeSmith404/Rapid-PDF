@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/optionViewFile"
+        android:icon="@drawable/book_open_variant_outline"
+        android:title="Open File"
+        android:iconTint="@color/black"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/optionRapidMode"
+        android:title="Rapid Mode"
+        android:checkable="true"
+        android:checked="false"/>
+    <item
+        android:id="@+id/optionLeftRight"
+        android:title="Hide Swipe Sontrols"
+        android:checkable="true"
+        android:checked="false"/>
+
+</menu>

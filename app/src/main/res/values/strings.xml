@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Rapid PDF</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string-array name="my_category_array">
+        <item>academic</item>
+        <item>book</item>
+        <item>certificate</item>
+        <item>invoice</item>
+        <item>reports</item>
+    </string-array>
+    <string-array name="on_boarding_title">
+        <item>Welcome to Rapid Pdf</item>
+        <item>Navigating PDF documents</item>
+        <item>Rename and Categorize PDFs</item>
+        <item>Deleting and Bookmarking</item>
+        <item>Managing Directories and Files</item>
+    </string-array>
+    <string-array name="on_boarding_description">
+        <item><![CDATA[Experience <b>seamless management</b> of your PDF documents.Quickly browse, <b>rename, categorize, delete, and bookmark</b> your files. Effortlessly handle <b>multiple folders</b> and ensure your <b>important documents</b> are always at your fingertips.]]></item>
+        <item><![CDATA[Easily browse through all your PDF documents stored on your device. <b>Swipe left or right</b> to quickly skip to the next or previous document, making it simple to find exactly what you\'re looking for.]]></item>
+        <item><![CDATA[<b>Organize your PDFs</b> by <b>renaming them</b>. <br/><b>Add categories to file names</b> for better sorting and easier access. This helps you keep your documents well-organized and quickly find the files you need.]]></item>
+        <item><![CDATA[Free up space by <b>deleting</b> unnecessary PDF documents with a simple tap.<b>Bookmark important PDFs</b> for quick and convenient access from the bookmarks section. This ensures that your most important documents are always just a tap away.]]></item>
+        <item><![CDATA[Access and manage PDFs across <b>multiple folders</b>. Easily browse through folders to find and organize your files. This feature helps you maintain a structured and accessible collection of documents, no matter where they are stored.]]></item>
+    </string-array>
+</resources>

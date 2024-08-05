@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_pages"
+        android:title="Pages per pdf"
+        app:showAsAction="never" >
+        <menu>
+            <group android:checkableBehavior="single"/>
+            <item
+                android:id="@+id/optionPages1"
+                android:title="1 pages"
+                android:checked="false"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/optionPages2"
+                android:title="2 pages"
+                android:checked="false"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/optionPages3"
+                android:title="3 pages"
+                android:checkable="true"
+                android:checked="false" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/optionManageCategoriesMenu"
+        android:title="Manage categories"
+        app:showAsAction="never"/>
+
+
+</menu>

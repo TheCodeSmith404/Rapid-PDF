@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/groupPremiumFeatures"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/subtitle1"
+            android:title="Premium Features">
+            <menu>
+                <item
+                    android:id="@+id/itemRemoveAds"
+                    android:icon="@drawable/advertisements_off"
+                    android:title="Remove Advertisement" />
+
+            </menu>
+        </item>
+    </group>
+
+    <group
+    android:id="@+id/groupGeneral"
+    android:checkableBehavior="single">
+    <item
+        android:id="@+id/subtitleGeneral"
+        android:title="General">
+        <menu>
+            <item
+                android:id="@+id/optionManageCategories"
+                android:icon="@drawable/group"
+                android:title="Manage Categories" />
+
+            <item
+                android:id="@+id/optionPagesPerFile"
+                android:icon="@drawable/counter"
+                android:title="Pages per PDF"/>
+            <item
+                android:id="@+id/optionReloadFiles"
+                android:icon="@drawable/folder_refresh_outline"
+                android:title="Reload Files from Directory"/>
+            <item
+                android:id="@+id/optionAddFiles"
+                android:icon="@drawable/folder_plus_outline"
+                android:title="Add Files from New Directory"/>
+            <item
+                android:id="@+id/optionChangeDirectory"
+                android:icon="@drawable/folder_arrow_right_outline"
+                android:title="Change Files Directory"/>
+        </menu>
+    </item>
+    </group>
+    <group
+        android:id="@+id/group_help"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/subtitleHelp"
+            android:title="Help">
+            <menu>
+                <item
+                    android:id="@+id/optionOpenTutorial"
+                    android:icon="@drawable/lightbulb_on_outline"
+                    android:title="Open Tutorial"/>
+                <item
+                    android:id="@+id/optionHowTo"
+                    android:icon="@drawable/baseline_help_outline_24"
+                    android:title="How To"/>
+            </menu>
+        </item>
+    </group>
+    <group
+        android:id="@+id/groupAbout"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/subtitleAbout"
+            android:title="About">
+            <menu>
+                <item
+                    android:id="@+id/optionContactUs"
+                    android:icon="@drawable/outline_alternate_email_24"
+                    android:title="Contact Us"/>
+                <item
+                    android:id="@+id/optionWriteReview"
+                    android:icon="@drawable/baseline_star_outline_24"
+                    android:title="Write a review"/>
+            </menu>
+        </item>
+    </group>
+</menu>

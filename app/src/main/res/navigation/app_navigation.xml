@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/home">
+    <fragment
+        android:id="@+id/home"
+        android:label="Welcome!"
+        android:name="com.tcs.tools.managePdf.ui.home.Home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_sortPdf"
+            app:destination="@id/sortPdf"/>
+        <action
+            android:id="@+id/action_home_to_showPdf"
+            app:destination="@id/show_pdf"/>
+        <action
+            android:id="@+id/action_home_to_manage_categories"
+            app:destination="@id/manage_dialog"/>
+        <action
+            android:id="@+id/action_home_to_on_boarding"
+            app:destination="@id/on_boarding"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/sortPdf"
+        android:label="Sort Files"
+        android:name="com.tcs.tools.managePdf.ui.sortPdf.SortPdf"
+        tools:layout="@layout/fragment_pdfsort">
+        <argument
+            android:name="file_id"
+            app:argType="long"/>
+        <action
+            android:id="@+id/action_sortPdf_to_show_pdf"
+            app:destination="@id/show_pdf"
+            app:popUpTo="@id/home"/>
+        <action
+            android:id="@+id/action_sortPdf_to_on_boarding"
+            app:destination="@id/on_boarding"
+            app:popUpTo="@id/home"/>
+    </fragment>
+    <fragment
+        android:id="@+id/show_pdf"
+        android:label="View Files"
+        android:name="com.tcs.tools.managePdf.ui.pdfHost.ShowPdf"
+        tools:layout="@layout/fragment_show_pdf">
+        <argument
+            android:name="file_id"
+            app:argType="long"/>
+        <action
+            android:id="@+id/show_pdf_to_manage_categories"
+            app:destination="@id/manage_dialog"/>
+        <action
+            android:id="@+id/action_show_pdf_to_on_boarding"
+            app:destination="@id/on_boarding" />
+    </fragment>
+    <dialog
+        android:id="@+id/manage_dialog"
+        android:name="com.tcs.tools.managePdf.ui.baseActivity.ManageCategories"
+        tools:layout="@layout/dialog_manage_categories"/>
+    <fragment
+        android:id="@+id/on_boarding"
+        android:name="com.tcs.tools.managePdf.ui.onBoarding.OnBoarding"
+        android:label="On Boarding"
+        tools:layout="@layout/fragment_on_boarding">
+        <action
+            android:id="@+id/action_on_boarding_to_home"
+            app:destination="@id/home"
+            app:popUpTo="@id/on_boarding"/>
+    </fragment>
+
+</navigation>

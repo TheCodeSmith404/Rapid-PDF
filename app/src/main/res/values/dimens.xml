@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="four_dp">8dp</dimen>
+    <dimen name="chip_margin_horizontal">0dp</dimen>
+    <dimen name="chip_margin_vertical">0dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+</resources>

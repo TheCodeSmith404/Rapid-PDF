@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "375064343706",
+    "project_id": "rapid-pdf",
+    "storage_bucket": "rapid-pdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375064343706:android:ea001c6dab2543e5dfdb23",
+        "android_client_info": {
+          "package_name": "com.tcs.tools.managePdf"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3tfYfXzzO0W03QCT1Tp5DFLu77Tngnx0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
