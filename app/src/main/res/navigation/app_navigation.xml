@@ -44,7 +44,7 @@
     <fragment
         android:id="@+id/show_pdf"
         android:label="View Files"
-        android:name="com.tcs.tools.managePdf.ui.pdfHost.ShowPdf"
+        android:name="com.tcs.tools.managePdf.ui.showPdf.ShowPdf"
         tools:layout="@layout/fragment_show_pdf">
         <argument
             android:name="file_id"

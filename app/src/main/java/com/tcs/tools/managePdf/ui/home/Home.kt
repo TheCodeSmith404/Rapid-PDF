@@ -16,6 +16,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
@@ -39,6 +40,8 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.perf.FirebasePerformance
 import com.tcs.tools.managePdf.R
@@ -61,6 +64,7 @@ class Home : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels()
     private val viewModel: MainActivityViewModel by activityViewModels()
     private val rvViewModel:RvViewModel by viewModels()
+    private lateinit var fab:FloatingActionButton
     private val preferenceManager: PreferenceManager by lazy {
         PreferenceManager(context ?: requireContext())
     }
@@ -78,6 +82,14 @@ class Home : Fragment() {
         }
     }
     private val trace=FirebasePerformance.getInstance().newTrace("home_start_time")
+    private val dialogView:View by lazy{LayoutInflater.from(context).inflate(R.layout.dialog_loading,null)}
+    private val dialog:AlertDialog by lazy {
+        AlertDialog.Builder(context)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         trace.start()
         super.onCreate(savedInstanceState)
@@ -100,6 +112,7 @@ class Home : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fab=requireActivity().findViewById<FloatingActionButton>(R.id.fab)
         if(homeViewModel.fistStart){
             viewModel.loading=false
             findNavController().navigate(R.id.action_home_to_on_boarding)
@@ -108,8 +121,11 @@ class Home : Fragment() {
             binding.requestStorageAccessContainer.visibility=View.GONE
             binding.filesContainer.visibility=View.VISIBLE
             setUpAdapter()
+            if(fab.visibility==View.GONE)
+                fab.visibility=View.VISIBLE
             viewModel.loading=false
         } else {
+            fab.visibility=View.GONE
             showRequestStorageAccess()
         }
         addMenu()
@@ -149,6 +165,7 @@ class Home : Fragment() {
     }
     private fun setUpAdapter(){
         binding.viewpager.adapter=ViewPagerAdapter(this)
+        dialog.hide()
         binding.viewpager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -245,19 +262,28 @@ class Home : Fragment() {
                 putExtra(DocumentsContract.EXTRA_INITIAL_URI, Uri.parse("content://com.android.externalstorage.documents/document/primary:"))
             }
             requestStorageAccessLauncher.launch(intent)
+            dialog.show()
         }
     }
-
-
     private fun loadPdfFilesFromUri() {
+        if(!dialog.isShowing){
+            dialog.show()
+        }
         Log.d(TAG,"Loading files")
         binding.requestStorageAccessContainer.visibility = View.GONE
         //TODO set a loading animation or bar to load files
         homeViewModel.loadPdfFilesFromUri(requireContext().contentResolver) { result ->
            if(result){
+               binding.filesContainer.visibility=View.VISIBLE
+               fab.visibility=View.VISIBLE
                setUpAdapter()
                Log.d(TAG,"Files Loaded Set Adapter")
            }else{
+               val snackBar=Snackbar.make(binding.root,"Unable to load files from folder",Snackbar.LENGTH_LONG)
+               snackBar.setAction("Retry"){
+                   loadPdfFilesFromUri()
+               }
+               snackBar.show()
                Log.d(TAG," Files Not loaded Failure")
            }
         }

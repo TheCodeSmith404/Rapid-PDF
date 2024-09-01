@@ -1,5 +1,6 @@
-package com.tcs.tools.managePdf.ui.pdfHost
+package com.tcs.tools.managePdf.ui.showPdf
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -21,9 +22,7 @@ import androidx.navigation.fragment.findNavController
 import com.rajat.pdfviewer.PdfRendererView
 import com.tcs.tools.managePdf.R
 import com.tcs.tools.managePdf.databinding.FragmentShowPdfBinding
-import data.room.FileEntity
 import kotlinx.coroutines.launch
-import java.io.File
 
 class ShowPdf : Fragment() {
     private var _binding:FragmentShowPdfBinding?=null
@@ -32,6 +31,7 @@ class ShowPdf : Fragment() {
     private val  viewModel:ShowPdfViewModel by viewModels()
     private var scrolling=false
     private var currentPageGlobal=0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,14 +63,13 @@ class ShowPdf : Fragment() {
                                 }
                             },500)
                         }else{
-                            currentPageGlobal=currentPage
+                            currentPageGlobal=currentPage+1
                         }
                     }
                 }
                 binding.verticalSlider.updateMaxValue(binding.pdfRenderer.totalPageCount)
                 binding.verticalSlider.setOnProgressChangeListener { page->
-                    if(page!=1)
-                        binding.pdfRenderer.jumpToPage(page)
+                    binding.pdfRenderer.jumpToPage(page-1)
                 }
                 binding.showPdfProgressBar.visibility = View.GONE
                 binding.favImageButton.setOnClickListener {
@@ -137,6 +136,14 @@ class ShowPdf : Fragment() {
                     R.id.optionManageCategoriesMenuFav -> {
                         Log.d("menu","Item Selected categories")
                         findNavController().navigate(R.id.show_pdf_to_manage_categories)
+                        return true
+                    }
+                    R.id.optionShareFileMenuFav->{
+                        val intent = Intent()
+                        intent.setAction(Intent.ACTION_SEND)
+                        intent.setType("application/pdf")
+                        intent.putExtra(Intent.EXTRA_STREAM, viewModel.fileUri)
+                        startActivity(Intent.createChooser(intent,"Share File"))
                         return true
                     }
                     else -> {

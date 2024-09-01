@@ -1,6 +1,7 @@
 package com.tcs.tools.managePdf.ui.sortPdf
 
 import android.content.Context
+import android.net.Uri
 import android.provider.DocumentsContract
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -27,6 +28,7 @@ class SortPdfViewModel:ViewModel() {
     var sizePdf=0
     var currentPosition=0
     var currentId=0L
+    var currentUri:Uri?=null
     var currentName:String=""
     var pagerChangeState =false
 

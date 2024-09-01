@@ -1,5 +1,7 @@
 package com.tcs.tools.managePdf.ui.sortPdf
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -8,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -34,7 +37,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
 class SortPdf: Fragment() {
     private var _binding: FragmentPdfsortBinding? = null
     private val binding get() = _binding!!
@@ -46,7 +48,6 @@ class SortPdf: Fragment() {
     ): View {
         // Disable force dark mode for this fragment
         val themedInflater = inflater.cloneInContext(context)
-
         // Inflate the binding layout
         _binding = FragmentPdfsortBinding.inflate(themedInflater, container, false)
         viewModel.init(requireContext())
@@ -71,8 +72,11 @@ class SortPdf: Fragment() {
                         binding.radioGroupSortFiles.clearCheck()
                         viewModel.currentPosition=position
                         viewModel.currentId =file.id
+                        viewModel.currentUri=file.uri
                         viewModel.currentName=file.fileName
                         binding.changeName.setText(file.fileName)
+                        val drawableEnd =ContextCompat.getDrawable(requireContext(),R.drawable.close_circle_outline)
+                        binding.changeName.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableEnd, null)
                     }
                 })
             })
@@ -122,6 +126,14 @@ class SortPdf: Fragment() {
                             binding.leftRightGroup.visibility=View.VISIBLE
                         return true
                     }
+                    R.id.shareFile->{
+                        val intent= Intent()
+                        intent.setAction(Intent.ACTION_SEND)
+                        intent.setType("application/pdf")
+                        intent.putExtra(Intent.EXTRA_STREAM,viewModel.currentUri)
+                        startActivity(Intent.createChooser(intent,"Share File"))
+                        return true
+                    }
                     else -> {
                         Log.d("menu","No Item Selected ${menuItem.itemId}")
                         return false
@@ -130,19 +142,21 @@ class SortPdf: Fragment() {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
+    @SuppressLint("ClickableViewAccessibility")
     private fun setOnClickListeners(){
         if(viewModel.hideLeftRight){
             binding.leftRightGroup.visibility=View.GONE
-        }
-        binding.left.setOnClickListener {
-            val pos = viewModel.currentPosition
-            if (pos > 0)
-                binding.viewpager.currentItem = pos - 1
-        }
-        binding.right.setOnClickListener {
-            val pos = viewModel.currentPosition
-            if (pos < viewModel.sizePdf - 1)
-                binding.viewpager.currentItem = pos + 1
+        }else {
+            binding.left.setOnClickListener {
+                val pos = viewModel.currentPosition
+                if (pos > 0)
+                    binding.viewpager.currentItem = pos - 1
+            }
+            binding.right.setOnClickListener {
+                val pos = viewModel.currentPosition
+                if (pos < viewModel.sizePdf - 1)
+                    binding.viewpager.currentItem = pos + 1
+            }
         }
         binding.imageButtonSave.setOnClickListener{
             renameFile()
@@ -153,14 +167,27 @@ class SortPdf: Fragment() {
                 renameFile()
                 true
             } else {
-                false // Continue listening for other events
+                false
             }
+        }
+
+        binding.changeName.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                // Check if the touch was within the bounds of drawableEnd
+                val width=binding.changeName.compoundDrawables[2]?.bounds?.width()?:0
+                if (event.rawX >= ((binding.changeName.right - width))
+                ) {
+                    binding.changeName.text?.clear()
+                    binding.changeName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+                    return@setOnTouchListener true
+                }
+            }
+            return@setOnTouchListener false
         }
         binding.delete.setOnClickListener{
             if(viewModel.rapidMode){
                 lifecycleScope.launch {
-                    viewModel.deleteFile(requireContext(), viewModel.currentId)
-                    binding.viewpager.setCurrentItem(viewModel.currentPosition + 1, true)
+                    deleteFile()
                 }
             }else {
                 MaterialAlertDialogBuilder(requireContext())
@@ -170,8 +197,7 @@ class SortPdf: Fragment() {
                     .setPositiveButton("Delete") { dialog, which ->
                         // User clicked Delete button
                         lifecycleScope.launch {
-                            viewModel.deleteFile(requireContext(), viewModel.currentId)
-                            binding.viewpager.setCurrentItem(viewModel.currentPosition + 1, true)
+                            deleteFile()
                             Toast.makeText(requireContext(), "File Deleted", Toast.LENGTH_SHORT)
                                 .show()
                         }
@@ -220,7 +246,7 @@ class SortPdf: Fragment() {
                 // Get the text of the selected RadioButton
                 val selectedText = selectedRadioButton.text.toString()
                 val et=binding.changeName
-                binding.changeName.setText("${viewModel.currentName}_$selectedText")
+                et.setText("${et.text}_$selectedText")
 
             }
 
@@ -250,11 +276,17 @@ class SortPdf: Fragment() {
         // Add the RadioButton to the RadioGroup
         radioGroup.addView(radioButton)
     }
+    private suspend fun deleteFile(){
+        viewModel.deleteFile(requireContext(), viewModel.currentId)
+        adapter.setFileDeleted(viewModel.currentPosition)
+        binding.viewpager.setCurrentItem(viewModel.currentPosition + 1, true)
+    }
     private fun renameFile(){
         val name=binding.changeName.text.toString()
         Log.d("uri","Save Button Pressed")
         if(name.isNotEmpty()){
             lifecycleScope.launch {
+                adapter.setFileName(viewModel.currentPosition,name)
                 viewModel.renameFile(requireContext(),viewModel.currentId,name)
             }
             if(!viewModel.rapidMode) {

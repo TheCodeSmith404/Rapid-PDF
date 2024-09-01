@@ -21,6 +21,7 @@ import java.util.Locale
 
 class PdfActivityViewModel:ViewModel() {
     private lateinit var repository: Repository
+    var fileUri:Uri?=null
     fun init(context: Context){
         val fileDao = AppDatabase.getDatabase(context).fileDao()
         repository= Repository(context,fileDao, PreferenceManager(context))

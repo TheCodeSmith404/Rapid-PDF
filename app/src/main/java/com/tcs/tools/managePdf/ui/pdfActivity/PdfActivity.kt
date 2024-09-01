@@ -3,6 +3,10 @@ package com.tcs.tools.managePdf.ui.pdfActivity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +17,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.perf.FirebasePerformance
+import com.rajat.pdfviewer.PdfRendererView
 import com.tcs.tools.managePdf.R
 import com.tcs.tools.managePdf.databinding.ActivityPdfBinding
 import com.tcs.tools.managePdf.ui.baseActivity.MainActivity
@@ -23,6 +28,8 @@ class PdfActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPdfBinding
     private val viewModel:PdfActivityViewModel by viewModels()
     private val trace=FirebasePerformance.getInstance().newTrace("pdf_activity_load_time")
+    private var scrolling=false
+    private var currentPageGlobal=0
     override fun onCreate(savedInstanceState: Bundle?) {
         trace.start()
         super.onCreate(savedInstanceState)
@@ -42,6 +49,7 @@ class PdfActivity : AppCompatActivity() {
         viewModel.init(this)
         if (Intent.ACTION_VIEW == intent.action) {
             val pdfUri = intent.data
+            viewModel.fileUri=pdfUri
             if (pdfUri != null) {
                 try {
                     val takeFlags =
@@ -53,7 +61,57 @@ class PdfActivity : AppCompatActivity() {
                 openPdf(pdfUri)
             }
         }
+        setUpScrollBar()
         trace.stop()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.share_menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.shareFileActivity->{
+                if(viewModel.fileUri!=null) {
+                    val intent = Intent()
+                    intent.setAction(Intent.ACTION_SEND)
+                    intent.setType("application/pdf")
+                    intent.putExtra(Intent.EXTRA_STREAM, viewModel.fileUri)
+                    startActivity(Intent.createChooser(intent,"Share File"))
+                }
+                else{
+                    Toast.makeText(baseContext,"Unable to share file",Toast.LENGTH_SHORT).show()
+                }
+                true
+
+            }
+
+            else->{
+                false
+            }
+        }
+    }
+    private fun setUpScrollBar(){
+        binding.pdfRenderer.statusListener=object : PdfRendererView.StatusCallBack{
+            override fun onPageChanged(currentPage: Int, totalPage: Int) {
+                if (!scrolling) {
+                    scrolling=true
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        binding.verticalSliderActivity.post{
+                            binding.verticalSliderActivity.updateProgress(currentPageGlobal)
+                            scrolling=false
+                        }
+                    },500)
+                }else{
+                    currentPageGlobal=currentPage+1
+                }
+            }
+        }
+        binding.verticalSliderActivity.updateMaxValue(binding.pdfRenderer.totalPageCount)
+        binding.verticalSliderActivity.setOnProgressChangeListener { page->
+            binding.pdfRenderer.jumpToPage(page-1)
+        }
     }
     private fun openPdf(pdfUri: Uri) {
         val pdfView = binding.pdfRenderer

@@ -37,9 +37,8 @@ class SortPdfAdapter(
     private val adapterScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private lateinit var uri:Uri
 
-    inner class SortPdfViewHolder(private val binding: SortPdfItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class SortPdfViewHolder(binding: SortPdfItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val viewBinding=binding
-        val progress=binding.progress
         val pdfName=binding.pdfName
     }
 
@@ -51,33 +50,39 @@ class SortPdfAdapter(
     override fun onBindViewHolder(holder: SortPdfViewHolder, position: Int) {
         val file=totalPdfFiles[position]
         uri=file.uri
-        holder.pdfName.text=file.fileName
-        adapterScope.launch {
-            renderPdfPages(uri,holder.viewBinding)
+        if(file.isDeleted){
+            holder.viewBinding.fileDeleted.visibility=View.VISIBLE
+            if(holder.viewBinding.pdfViewContainer.visibility!=View.GONE)
+                holder.viewBinding.pdfViewContainer.visibility=View.GONE
+            if(holder.viewBinding.uriError.visibility!=View.GONE)
+                holder.viewBinding.uriError.visibility=View.GONE
+            if(holder.viewBinding.securityError.visibility!=View.GONE)
+                holder.viewBinding.securityError.visibility=View.GONE
+        }else {
+            if(holder.viewBinding.fileDeleted.visibility!=View.GONE)
+                holder.viewBinding.fileDeleted.visibility=View.GONE
+            if(holder.viewBinding.pdfViewContainer.visibility!=View.VISIBLE)
+                holder.viewBinding.pdfViewContainer.visibility=View.VISIBLE
+            holder.pdfName.text=file.fileName
+            adapterScope.launch {
+                renderPdfPages(uri, holder.viewBinding)
+            }
         }
-
     }
 
     override fun getItemCount(): Int = totalPdfFiles.size
-//
-
-//
-//    private fun loadMoreItems() {
-//        Log.d("pdf","Loading more")
-//        isLoading=true
-//        val start = end
-//        val endLocal = (end + pageSize).coerceAtMost(totalPdfFiles.size)
-//        pdfFiles.addAll(totalPdfFiles.subList(start, endLocal))
-//        Handler(Looper.getMainLooper()).post {
-//            notifyItemRangeInserted(start,pageSize)
-//            isLoading=false
-//        }
-//        Log.d("pdf","$start: to : $endLocal")
-//    }
+    fun setFileDeleted(position: Int){
+        totalPdfFiles[position].isDeleted=true
+        notifyItemChanged(position)
+    }
+    fun setFileName(position: Int,name:String){
+        totalPdfFiles[position].fileName=name
+    }
 
     private suspend fun renderPdfPages(pdfUri: Uri, binding: SortPdfItemBinding) {
         val linearLayoutPdfContainer=binding.pdfViewContainer
         val pdfView=binding.pdfView
+        val fileDeleted=binding.fileDeleted
         binding.scrollView.scrollY=0
         val securityError=binding.securityError
         val uriError=binding.uriError
@@ -143,6 +148,8 @@ class SortPdfAdapter(
             withContext(Dispatchers.Main) {
                 linearLayoutPdfContainer.visibility=View.GONE
                 securityError.visibility=View.VISIBLE
+                if(fileDeleted.visibility!=View.GONE)
+                    fileDeleted.visibility=View.GONE
                 if(uriError.visibility!=View.GONE)
                     uriError.visibility=View.GONE
             }
@@ -152,6 +159,8 @@ class SortPdfAdapter(
             withContext(Dispatchers.Main){
                 if(securityError.visibility!=View.GONE)
                     securityError.visibility=View.GONE
+                if(fileDeleted.visibility!=View.GONE)
+                    fileDeleted.visibility=View.GONE
                 linearLayoutPdfContainer.visibility=View.GONE
                 uriError.visibility=View.VISIBLE
             }

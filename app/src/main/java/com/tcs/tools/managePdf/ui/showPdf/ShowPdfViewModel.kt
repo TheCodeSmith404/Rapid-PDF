@@ -1,7 +1,8 @@
-package com.tcs.tools.managePdf.ui.pdfHost
+package com.tcs.tools.managePdf.ui.showPdf
 
 import android.content.ContentResolver
 import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.repository.Repository
@@ -15,6 +16,7 @@ import kotlinx.coroutines.withContext
 class ShowPdfViewModel:ViewModel() {
     private lateinit var repository: Repository
     private lateinit var contentResolver: ContentResolver
+    lateinit var fileUri:Uri
     fun init(context: Context){
         val fileDao = AppDatabase.getDatabase(context).fileDao()
         repository=Repository(context,fileDao, PreferenceManager(context))
@@ -22,7 +24,9 @@ class ShowPdfViewModel:ViewModel() {
     }
     suspend fun getFile(id:Long): FileEntity {
         return withContext(Dispatchers.IO){
-           repository.getFileById(id)
+           val file=repository.getFileById(id)
+            fileUri=file.uri
+            file
         }
     }
     suspend fun setHasFavFile(){

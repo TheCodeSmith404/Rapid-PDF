@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/optionShareFileMenuFav"
+        android:id="@+id/shareFileActivity"
         android:title="Share File"
-        android:iconTint="@color/black"
         android:icon="@drawable/baseline_share_24"
+        android:iconTint="@color/black"
         app:showAsAction="always"/>
-    <item
-        android:id="@+id/optionManageCategoriesMenuFav"
-        android:title="Manage categories"
-        app:showAsAction="never"/>
 </menu>

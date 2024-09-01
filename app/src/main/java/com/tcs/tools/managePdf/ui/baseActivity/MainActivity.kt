@@ -171,6 +171,11 @@ class MainActivity : AppCompatActivity() {
                     hideFab()
                     binding.appBarMain.appBarLayout.visibility = View.VISIBLE
                     binding.appBarMain.fab.visibility = View.GONE
+                    val icon=ContextCompat.getDrawable(this,R.drawable.baseline_arrow_back_24)
+                    drawerToggle.setHomeAsUpIndicator(icon)
+                    drawerToggle.setToolbarNavigationClickListener {
+                        navHostFragment.navController.navigateUp()
+                    }
                     drawerToggle.isDrawerIndicatorEnabled = false
                     binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                     drawerToggle.syncState()

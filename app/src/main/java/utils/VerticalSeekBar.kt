@@ -17,7 +17,7 @@ class VerticalSlider @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     private var onProgressChangeListener: ((Int) -> Unit)? = null
-    var maxValue = 100
+    private var maxValue = 100
     private var progress: Int = 1
         set(value) {
             val newValue = when {
@@ -81,13 +81,17 @@ class VerticalSlider @JvmOverloads constructor(
             if (textView.text.toString() != newProgress.toString()) {
                 textView.text = newProgress.toString()
             }
+            if(maxValue==1){
+                visibility= GONE
+            }else {
 
-            val marginByProgress = ((newProgress - 1) * fillHeight / (maxValue - 1))
-            if ((thumb.layoutParams as LayoutParams).topMargin != marginByProgress) {
-                thumb.layoutParams = (thumb.layoutParams as LayoutParams).apply {
-                    topMargin = marginByProgress
+                val marginByProgress = ((newProgress - 1) * fillHeight / (maxValue - 1))
+                if ((thumb.layoutParams as LayoutParams).topMargin != marginByProgress) {
+                    thumb.layoutParams = (thumb.layoutParams as LayoutParams).apply {
+                        topMargin = marginByProgress
+                    }
+                    thumb.requestLayout()
                 }
-                thumb.requestLayout()
             }
         }
     }

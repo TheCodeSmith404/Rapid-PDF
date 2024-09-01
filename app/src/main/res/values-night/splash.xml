@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ManagePDF.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="postSplashScreenTheme">@style/Theme.ManagePDF</item>
+        <!--Change the icon style-->
+        <item name="windowSplashScreenAnimatedIcon" >@mipmap/dark_icon</item>
+    </style>
+</resources>
