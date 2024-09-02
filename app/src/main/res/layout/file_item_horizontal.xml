@@ -7,7 +7,7 @@
     android:layout_marginLeft="4dp"
     android:layout_marginTop="8dp"
     android:layout_marginRight="4dp"
-    android:backgroundTint="@color/white">
+    android:backgroundTint="@color/card_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -45,6 +45,7 @@
                 android:layout_marginTop="4dp"
                 android:background="@android:color/transparent"
                 android:ellipsize="marquee"
+                android:textColor="@color/fileName"
                 android:maxLines="1"
                 android:padding="2dp"
                 android:text="name"
@@ -87,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/card_background"
             android:padding="4dp"
             android:src="@drawable/baseline_more_vert_24"
             app:layout_constraintBottom_toBottomOf="parent"

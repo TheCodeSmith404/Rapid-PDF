@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="fileName">#FF000000</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey">#FFDDDDDD</color>
-    <color name="purple50">#FFCE93D8</color>
-    <color name="light_gray">#FFF7F7Fb</color>
-    <color name="medium_light_gray">#555555</color>
-    <color name="just_gray">#FF888888</color>
-    <color name="medium_dark_gray">#FF666666</color>
-    <color name="dark_white">#FFEEEEEE</color>
-    <color name="not_white">#FFEFEFEF</color>
+    <color name="card_background">#FFFFFFFF</color>
+    <color name="grey">#FF333333</color>
+    <color name="purple50">#FF6D28D9</color>
+    <color name="light_gray">#FFDDDDDD</color>
+    <color name="medium_light_gray">#FF888888</color>
+    <color name="just_gray">#FFB0B0B0</color>
+    <color name="medium_dark_gray">#FF999999</color>
+    <color name="dark_white">#FFDDDDDD</color>
+    <color name="not_white">#FFF1F1F1</color>
 </resources>

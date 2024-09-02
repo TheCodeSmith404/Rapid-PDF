@@ -66,7 +66,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/card_background"
         android:elevation="5dp"
         android:orientation="vertical"
         android:padding="4dp"
@@ -115,10 +115,10 @@
                     android:id="@+id/changeName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/close_circle_outline"
                     android:hint="Rename Files"
                     android:inputType="text"
-                    android:maxLines="1"
-                    android:drawableEnd="@drawable/close_circle_outline"/>
+                    android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

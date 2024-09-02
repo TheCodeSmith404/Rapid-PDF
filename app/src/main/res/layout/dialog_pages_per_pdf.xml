@@ -12,12 +12,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
             android:text="Pages per file"
-            android:textColor="@color/black"/>
+            android:textColor="@color/fileName"
+            android:textSize="24sp" />
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"

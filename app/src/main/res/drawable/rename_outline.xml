@@ -3,7 +3,8 @@
     android:width="36dp"
     android:height="36dp"
     android:viewportWidth="36"
-    android:viewportHeight="36">
+    android:viewportHeight="36"
+    android:tint="?attr/colorControlNormal">
 
     <group>
         <path

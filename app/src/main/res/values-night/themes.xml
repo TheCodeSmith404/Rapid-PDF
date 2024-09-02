@@ -12,7 +12,7 @@
     <style name="Theme.ManagePDF.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:background">@color/black</item>
         <!-- Set the text color to white -->
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/fileName</item>
         <!-- Set the icon color to white -->
         <item name="colorControlNormal">@color/white</item>
         <item name="colorControlActivated">@color/white</item>

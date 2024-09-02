@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/light_gray"
     android:gravity="start"
     android:orientation="horizontal"
     android:paddingLeft="16dp"
@@ -17,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Rapid PDF"
-        android:textColor="@color/black"
+        android:textColor="@color/fileName"
         android:textStyle="bold"
         android:textAlignment="center"
         android:textSize="36dp"/>
