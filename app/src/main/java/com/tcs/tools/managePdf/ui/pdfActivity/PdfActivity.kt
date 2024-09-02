@@ -12,16 +12,13 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import com.google.firebase.perf.FirebasePerformance
 import com.rajat.pdfviewer.PdfRendererView
 import com.tcs.tools.managePdf.R
 import com.tcs.tools.managePdf.databinding.ActivityPdfBinding
 import com.tcs.tools.managePdf.ui.baseActivity.MainActivity
-import kotlinx.coroutines.launch
 
 
 class PdfActivity : AppCompatActivity() {

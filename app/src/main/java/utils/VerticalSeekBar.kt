@@ -6,10 +6,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.core.view.ViewCompat
 import com.tcs.tools.managePdf.R
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
 
 class VerticalSlider @JvmOverloads constructor(

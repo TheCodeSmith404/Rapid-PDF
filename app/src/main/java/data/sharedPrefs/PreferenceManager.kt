@@ -2,9 +2,6 @@ package data.sharedPrefs
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.net.Uri
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class PreferenceManager(context: Context) {
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)

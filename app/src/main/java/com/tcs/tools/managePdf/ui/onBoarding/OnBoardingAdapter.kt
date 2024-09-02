@@ -2,11 +2,8 @@ package com.tcs.tools.managePdf.ui.onBoarding
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.text.Html
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.tcs.tools.managePdf.R

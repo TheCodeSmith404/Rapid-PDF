@@ -3,20 +3,15 @@ package com.tcs.tools.managePdf.ui.home
 
 import android.content.ContentResolver
 import android.content.Context
-import android.provider.DocumentsContract
-import android.util.Log
 import androidx.core.net.toUri
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.repository.Repository
 import data.room.AppDatabase
-import data.room.FileEntity
 import data.sharedPrefs.PreferenceManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.IOException
 
 class HomeViewModel() : ViewModel() {
     private lateinit var repository: Repository

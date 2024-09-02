@@ -1,7 +1,5 @@
 package com.tcs.tools.managePdf.ui.home
 
-import android.animation.LayoutTransition
-import android.animation.ObjectAnimator
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -15,10 +13,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateInterpolator
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -27,19 +22,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.FullScreenContentCallback
-import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
@@ -49,8 +38,6 @@ import com.tcs.tools.managePdf.databinding.FragmentHomeBinding
 import com.tcs.tools.managePdf.ui.baseActivity.HomeState
 import com.tcs.tools.managePdf.ui.baseActivity.HomeStateIntent
 import com.tcs.tools.managePdf.ui.baseActivity.MainActivityViewModel
-import com.tcs.tools.managePdf.ui.home.adapter.HomeFavFileListItemAdapter
-import com.tcs.tools.managePdf.ui.home.adapter.HomeFileListItemAdapter
 import com.tcs.tools.managePdf.ui.home.adapter.ViewPagerAdapter
 import com.tcs.tools.managePdf.ui.home.rvFrags.RvState
 import com.tcs.tools.managePdf.ui.home.rvFrags.rvViewModels.RvViewModel
