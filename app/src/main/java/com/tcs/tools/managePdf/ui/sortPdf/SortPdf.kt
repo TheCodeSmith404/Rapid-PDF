@@ -68,15 +68,26 @@ class SortPdf: Fragment() {
                     ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)
-                        val file=pdfFiles[position]
+                        val file = pdfFiles[position]
                         binding.radioGroupSortFiles.clearCheck()
-                        viewModel.currentPosition=position
-                        viewModel.currentId =file.id
-                        viewModel.currentUri=file.uri
-                        viewModel.currentName=file.fileName
+                        viewModel.currentPosition = position
+                        viewModel.currentId = file.id
+                        viewModel.currentUri = file.uri
+                        viewModel.currentName = file.fileName
                         binding.changeName.setText(file.fileName)
-                        val drawableEnd =ContextCompat.getDrawable(requireContext(),R.drawable.close_circle_outline)
-                        binding.changeName.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableEnd, null)
+                        val drawableEnd = ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.close_circle_outline
+                        )
+                        binding.changeName.setCompoundDrawablesWithIntrinsicBounds(
+                            null,
+                            null,
+                            drawableEnd,
+                            null
+                        )
+                        if(position==adapter.itemCount-1){
+                            Toast.makeText(requireContext(),"No more Files Left",Toast.LENGTH_SHORT).show()
+                        }
                     }
                 })
             })

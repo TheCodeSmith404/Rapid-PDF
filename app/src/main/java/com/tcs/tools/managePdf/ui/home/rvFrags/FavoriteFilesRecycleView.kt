@@ -1,34 +1,27 @@
 package com.tcs.tools.managePdf.ui.home.rvFrags
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import com.google.android.gms.ads.MobileAds
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tcs.tools.managePdf.R
 import com.tcs.tools.managePdf.databinding.DialogRenameFileBinding
-import com.tcs.tools.managePdf.databinding.FragmentAllFilesRecycleViewBinding
 import com.tcs.tools.managePdf.databinding.FragmentFavoriteFilesRecycleViewBinding
-import com.tcs.tools.managePdf.ui.home.Home
-import com.tcs.tools.managePdf.ui.home.HomeViewModel
 import com.tcs.tools.managePdf.ui.home.adapter.HomeFavFileListItemAdapter
 import com.tcs.tools.managePdf.ui.home.rvFrags.rvViewModels.RvViewModel
+import com.tcs.tools.managePdf.utils.InputManager
 import data.room.FileEntity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -108,6 +101,9 @@ class FavoriteFilesRecycleView : Fragment() {
                                     .setView(alertView.root)
                                     .setCancelable(false)
                                     .create()
+                                alertView.reName.setText(file.fileName)
+                                alertView.reName.requestFocus()
+                                InputManager.showKeyboard(requireContext(),alertView.reName)
                                 alertView.dialogSave.setOnClickListener {
                                     val name = alertView.reName.text.toString()
                                     if (name.isNotEmpty()) {
@@ -121,19 +117,13 @@ class FavoriteFilesRecycleView : Fragment() {
                                             }
                                             alertDialog.cancel()
                                             files[position].fileName = name
+                                            InputManager.hideKeyboard(requireContext(),alertView.root)
+                                            showToast("Name changed")
                                             adapter.nameChanged(position,name)
                                         } else
-                                            Toast.makeText(
-                                                alertView.root.context,
-                                                "File name is not changed",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            showToast("File name is not changed")
                                     } else
-                                        Toast.makeText(
-                                            alertView.root.context,
-                                            "File name can not be empty",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                        showToast("File name can not be empty",false)
                                 }
                                 alertView.dialogClose.setOnClickListener {
                                     alertDialog.cancel()
@@ -150,24 +140,21 @@ class FavoriteFilesRecycleView : Fragment() {
                                         lifecycleScope.launch {
                                             rvViewModel.deleteFile(
                                                 requireContext(),
-                                                file.id
+                                                file
                                             ) { deleted ->
                                                 if (deleted) {
                                                     lifecycleScope.launch {
                                                         withContext(Dispatchers.Main) {
                                                             files.removeAt(position)
                                                             adapter.removeItem(position)
+                                                            showToast("File deleted")
                                                         }
                                                     }
 
                                                 } else {
                                                     lifecycleScope.launch {
                                                         withContext(Dispatchers.Main) {
-                                                            Toast.makeText(
-                                                                requireContext(),
-                                                                "Failed to delete file! Retry",
-                                                                Toast.LENGTH_LONG
-                                                            ).show()
+                                                            showToast("Failed to delete file! Retry")
                                                         }
                                                     }
                                                 }
@@ -180,7 +167,14 @@ class FavoriteFilesRecycleView : Fragment() {
                                     }
                                     .show()
                             }
-
+                            4->{
+                                lifecycleScope.launch {
+                                    rvViewModel.removeFile(file)
+                                    withContext(Dispatchers.Main) {
+                                        adapter.removeItem(position)
+                                    }
+                                }
+                            }
                             else -> {
                                 lifecycleScope.launch {
                                     withContext(Dispatchers.Main) {
@@ -196,6 +190,13 @@ class FavoriteFilesRecycleView : Fragment() {
                     binding.rvFav.adapter =adapter
                 }
             }
+        }
+    }
+    private fun showToast(text:String,long:Boolean=true){
+        if(long) {
+            Toast.makeText(requireContext(),text,Toast.LENGTH_LONG).show()
+        }else{
+            Toast.makeText(requireContext(),text,Toast.LENGTH_SHORT).show()
         }
     }
 }

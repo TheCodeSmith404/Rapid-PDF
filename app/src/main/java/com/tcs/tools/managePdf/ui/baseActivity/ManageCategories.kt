@@ -15,6 +15,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.tcs.tools.managePdf.R
 import com.tcs.tools.managePdf.databinding.DialogManageCategoriesBinding
+import com.tcs.tools.managePdf.utils.InputManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -93,6 +94,7 @@ class ManageCategories:DialogFragment() {
             }
         }
         binding.dialogClose.setOnClickListener{
+            InputManager.hideKeyboard(requireContext(),requireView())
             dismiss()
         }
         binding.dialogSave.setOnClickListener{
@@ -106,6 +108,7 @@ class ManageCategories:DialogFragment() {
                     viewmodel.setCategories(set)
                 }
             }
+            InputManager.hideKeyboard(requireContext(),requireView())
             dismiss()
         }
 

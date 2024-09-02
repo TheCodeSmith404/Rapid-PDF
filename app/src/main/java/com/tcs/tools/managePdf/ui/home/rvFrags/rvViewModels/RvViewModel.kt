@@ -12,9 +12,7 @@ import data.room.AppDatabase
 import data.room.FileEntity
 import data.sharedPrefs.PreferenceManager
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -80,10 +78,16 @@ class RvViewModel:ViewModel() {
             }
         }
     }
-    suspend fun deleteFile(context: Context, id: Long,onComplete:(Boolean)->Unit) {
+    fun removeFile(file:FileEntity){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                repository.deleteFile(file)
+            }
+        }
+    }
+    fun deleteFile(context: Context, file:FileEntity,onComplete:(Boolean)->Unit) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val file = repository.getFileById(id)
                 try {
                     val fileUri = file.uri
                     val deleted = DocumentsContract.deleteDocument(context.contentResolver, fileUri)

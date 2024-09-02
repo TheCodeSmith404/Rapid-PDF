@@ -8,6 +8,9 @@
         android:id="@+id/fav_file_item_menu_delete"
         android:title="Delete File" />
     <item
+        android:id="@+id/fav_file_item_menu_remove"
+        android:title="Remove File" />
+    <item
         android:id="@+id/fav_file_item_menu_fav"
         android:title="Remove Favorite" />
 </menu>

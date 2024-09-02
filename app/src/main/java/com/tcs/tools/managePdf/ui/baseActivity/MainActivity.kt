@@ -34,9 +34,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
 import com.tcs.tools.managePdf.R
 import com.tcs.tools.managePdf.databinding.ActivityMainBinding
@@ -224,26 +222,31 @@ class MainActivity : AppCompatActivity() {
     private fun showFab() {
         Log.d("fab","fab show fn")
         binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.baseline_remove_24))
-        animateFabShow(binding.appBarMain.fab1)
-        animateFabShow(binding.appBarMain.fab2)
-        animateFabShow(binding.appBarMain.fab3)
+        animateShowView(binding.appBarMain.fab1)
+        animateShowView(binding.appBarMain.tvRefresh)
+        animateShowView(binding.appBarMain.tvAddFiles)
+        animateShowView(binding.appBarMain.tvChangeFolder)
+        animateShowView(binding.appBarMain.fab2)
+        animateShowView(binding.appBarMain.fab3)
     }
-    private fun animateFabShow(floatingActionButton: FloatingActionButton){
+    private fun animateShowView(view:View){
         Log.d("fab","fab animate fn")
-        floatingActionButton.animate().withStartAction { floatingActionButton.visibility=View.VISIBLE }.translationY(0f).alpha(1f).setDuration(300).start()
+        view.animate().withStartAction { view.visibility=View.VISIBLE }.translationY(0f).alpha(1f).setDuration(300).start()
     }
     private fun hideFab() {
         Log.d("fab","fab hide fn")
         binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.baseline_add_24))
-        animateFabHide(binding.appBarMain.fab1)
-        animateFabHide(binding.appBarMain.fab2)
-        animateFabHide(binding.appBarMain.fab3)
+        animateHideView(binding.appBarMain.fab1)
+        animateHideView(binding.appBarMain.tvRefresh)
+        animateHideView(binding.appBarMain.tvAddFiles)
+        animateHideView(binding.appBarMain.tvChangeFolder)
+        animateHideView(binding.appBarMain.fab2)
+        animateHideView(binding.appBarMain.fab3)
     }
-    private fun animateFabHide(floatingActionButton: FloatingActionButton){
+    private fun animateHideView(view:View){
         Log.d("fab","fab hide fn animate")
-        floatingActionButton.animate().translationY(200f).alpha(0f).setDuration(300).withEndAction{floatingActionButton.visibility=View.GONE}.start()
+        view.animate().translationY(200f).alpha(0f).setDuration(300).withEndAction{view.visibility=View.GONE}.start()
     }
-
 
     private fun setupNavigationView() {
         val context=this

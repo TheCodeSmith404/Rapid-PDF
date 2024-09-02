@@ -97,6 +97,10 @@ class HomeFileListItemAdapter(private val pdfFiles: MutableList<FileEntity>,priv
                     onItemClick(file,4,position)
                     true
                 }
+                R.id.file_item_remove->{
+                    onItemClick(file,5,position)
+                    true
+                }
                 else->{
                     false
                 }

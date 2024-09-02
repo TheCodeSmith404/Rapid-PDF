@@ -67,5 +67,32 @@
         app:fabCustomSize="40dp"
         android:visibility="gone"
         app:srcCompat="@drawable/folder_arrow_right_outline" />
+    <TextView
+        android:id="@+id/tvRefresh"
+        app:layout_anchor="@id/fab1"
+        android:layout_marginRight="72dp"
+        app:layout_anchorGravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="Reload Files from Directory"/>
+    <TextView
+        android:id="@+id/tvAddFiles"
+        app:layout_anchor="@id/fab2"
+        android:layout_marginRight="72dp"
+        app:layout_anchorGravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="Add new Files"/>
+    <TextView
+        android:id="@+id/tvChangeFolder"
+        app:layout_anchor="@id/fab3"
+        android:layout_marginRight="72dp"
+        app:layout_anchorGravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="Change Current Directory"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

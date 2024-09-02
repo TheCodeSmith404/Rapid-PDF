@@ -2,14 +2,12 @@ package com.tcs.tools.managePdf.ui.home.rvFrags
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -25,12 +23,11 @@ import com.tcs.tools.managePdf.R
 import com.tcs.tools.managePdf.databinding.DialogRenameFileBinding
 import com.tcs.tools.managePdf.databinding.FragmentAllFilesRecycleViewBinding
 import com.tcs.tools.managePdf.ui.home.Home.Companion.TAG
-import com.tcs.tools.managePdf.ui.home.HomeViewModel
 import com.tcs.tools.managePdf.ui.home.adapter.HomeFileListItemAdapter
 import com.tcs.tools.managePdf.ui.home.rvFrags.rvViewModels.RvViewModel
+import com.tcs.tools.managePdf.utils.InputManager
 import data.sharedPrefs.PreferenceManager
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -159,6 +156,9 @@ class AllFilesRecycleView : Fragment() {
                                 .setView(alertView.root)
                                 .setCancelable(false)
                                 .create()
+                            alertView.reName.setText(file.fileName)
+                            alertView.reName.requestFocus()
+                            InputManager.showKeyboard(requireContext(),alertView.reName)
                             alertView.dialogSave.setOnClickListener{
                                 val name=alertView.reName.text.toString()
                                 if(name.isNotEmpty()){
@@ -170,14 +170,19 @@ class AllFilesRecycleView : Fragment() {
                                                 name
                                             )
                                         }
+                                        alertView.reName.clearFocus()
+                                        InputManager.hideKeyboard(requireContext(),alertView.root)
                                         alertDialog.cancel()
                                         adapter.nameChanged(position,name)
+                                        showToast("File renamed")
                                     }else
-                                        Toast.makeText(alertView.root.context,"File name is not changed",Toast.LENGTH_SHORT).show()
+                                        showToast("File name is not changed",false)
                                 }else
-                                    Toast.makeText(alertView.root.context,"File name can not be empty",Toast.LENGTH_SHORT).show()
+                                    showToast("File name can not be empty",false)
                             }
                             alertView.dialogClose.setOnClickListener{
+                                alertView.reName.clearFocus()
+                                InputManager.hideKeyboard(requireContext(),alertView.root)
                                 alertDialog.cancel()
                             }
                             alertDialog.show()
@@ -188,27 +193,24 @@ class AllFilesRecycleView : Fragment() {
                                 .setCancelable(false)
                                 .setPositiveButton("Delete") { dialog, which ->
                                     lifecycleScope.launch {
-                                        rvViewModel.deleteFile(requireContext(),file.id){deleted->
+                                        rvViewModel.deleteFile(requireContext(),file){deleted->
                                             if(deleted){
                                                 lifecycleScope.launch {
                                                     withContext(Dispatchers.Main) {
+                                                        dialog.dismiss()
                                                         adapter.removeItem(position)
+                                                        showToast("File Deleted")
                                                     }
                                                 }
-
                                             }else{
                                                 lifecycleScope.launch {
                                                     withContext(Dispatchers.Main) {
-                                                        Toast.makeText(
-                                                            requireContext(),
-                                                            "Failed to delete file! Retry",
-                                                            Toast.LENGTH_LONG
-                                                        ).show()
+                                                        dialog.dismiss()
+                                                        showToast("Failed to delete file! Retry")
                                                     }
                                                 }
                                             }
                                         }
-
                                     }
                                 }
                                 .setNegativeButton("Cancel") { dialog, which ->
@@ -223,6 +225,13 @@ class AllFilesRecycleView : Fragment() {
                                     adapter.removeItem(position)
                                 }
                             }
+                        } else if(type==5){
+                            lifecycleScope.launch {
+                                rvViewModel.removeFile(file)
+                                withContext(Dispatchers.Main){
+                                    adapter.removeItem(position)
+                                }
+                            }
                         } else {
                             findNavController().navigate(R.id.show_pdf, bundle)
                         }
@@ -232,6 +241,13 @@ class AllFilesRecycleView : Fragment() {
                 }
 
             }
+        }
+    }
+    private fun showToast(text:String,long:Boolean=true){
+        if(long) {
+            Toast.makeText(requireContext(),text,Toast.LENGTH_LONG).show()
+        }else{
+            Toast.makeText(requireContext(),text,Toast.LENGTH_SHORT).show()
         }
     }
     companion object{

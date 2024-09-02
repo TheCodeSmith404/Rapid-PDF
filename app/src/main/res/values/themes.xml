@@ -5,8 +5,7 @@
         <item name="colorAccent">@color/white</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:colorBackground">@color/white</item>
-
-
+        <item name="colorControlNormal">@color/black</item>
     </style>
 
     <style name="Theme.ManagePDF" parent="Base.Theme.ManagePDF" />

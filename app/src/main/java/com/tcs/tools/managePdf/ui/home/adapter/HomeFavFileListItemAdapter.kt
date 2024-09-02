@@ -1,6 +1,8 @@
 package com.tcs.tools.managePdf.ui.home.adapter
 
+import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tcs.tools.managePdf.R
 import com.tcs.tools.managePdf.databinding.FavFileItemHorizontalBinding
 import data.room.FileEntity
-import android.os.Handler
-import android.util.Log
 
 
 class HomeFavFileListItemAdapter(private val pdfFiles: MutableList<FileEntity>, private val onItemClick: (FileEntity,Int,Int) -> Unit) : RecyclerView.Adapter<HomeFavFileListItemAdapter.HomeFavFileListItemViewHolder>() {
@@ -58,6 +58,10 @@ class HomeFavFileListItemAdapter(private val pdfFiles: MutableList<FileEntity>, 
                 }
                 R.id.fav_file_item_menu_fav->{
                     onItemClick(file,3,position)
+                    true
+                }
+                R.id.fav_file_item_menu_remove->{
+                    onItemClick(file,4,position)
                     true
                 }
                 else->{
