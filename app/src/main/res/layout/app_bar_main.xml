@@ -71,6 +71,8 @@
     <TextView
         android:id="@+id/tvRefresh"
         app:layout_anchor="@id/fab1"
+        android:background="@drawable/textview_background"
+        android:padding="8dp"
         android:layout_marginRight="72dp"
         app:layout_anchorGravity="center"
         android:layout_width="wrap_content"
@@ -80,6 +82,8 @@
     <TextView
         android:id="@+id/tvAddFiles"
         app:layout_anchor="@id/fab2"
+        android:background="@drawable/textview_background"
+        android:padding="8dp"
         android:layout_marginRight="72dp"
         app:layout_anchorGravity="center"
         android:layout_width="wrap_content"
@@ -89,6 +93,8 @@
     <TextView
         android:id="@+id/tvChangeFolder"
         app:layout_anchor="@id/fab3"
+        android:background="@drawable/textview_background"
+        android:padding="8dp"
         android:layout_marginRight="72dp"
         app:layout_anchorGravity="center"
         android:layout_width="wrap_content"
