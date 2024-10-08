@@ -96,10 +96,10 @@ class PdfActivity : AppCompatActivity() {
                     scrolling=true
                     Handler(Looper.getMainLooper()).postDelayed({
                         binding.verticalSliderActivity.post{
-                            binding.verticalSliderActivity.updateProgress(currentPageGlobal)
+                            binding.verticalSliderActivity.updateThumbPosition(currentPageGlobal)
                             scrolling=false
                         }
-                    },500)
+                    },100)
                 }else{
                     currentPageGlobal=currentPage+1
                 }

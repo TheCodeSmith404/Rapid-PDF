@@ -92,6 +92,36 @@ class VerticalSlider @JvmOverloads constructor(
             }
         }
     }
+    fun updateThumbPosition(value:Int) {
+        val newProgress = when {
+            value < 1 -> 1
+            value > maxValue -> maxValue
+            else -> value
+        }
+        post {
+
+            val thumb = findViewById<FrameLayout>(R.id.thumb)
+            val textView = findViewById<TextView>(R.id.thumb_text)
+            val fillHeight = height - thumb.height
+
+            // Only update text and position if they have changed
+            if (textView.text.toString() != newProgress.toString()) {
+                textView.text = newProgress.toString()
+            }
+            if(maxValue==1){
+                visibility= GONE
+            }else {
+
+                val marginByProgress = ((value - 1) * fillHeight / (maxValue - 1))
+                if ((thumb.layoutParams as LayoutParams).topMargin != marginByProgress) {
+                    thumb.layoutParams = (thumb.layoutParams as LayoutParams).apply {
+                        topMargin = marginByProgress
+                    }
+                    thumb.requestLayout()
+                }
+            }
+        }
+    }
 
     fun setOnProgressChangeListener(listener: ((Int) -> Unit)?) {
         onProgressChangeListener = listener

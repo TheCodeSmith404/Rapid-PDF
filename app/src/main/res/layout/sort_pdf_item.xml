@@ -105,7 +105,6 @@
                     android:padding="8dp"/>
             </ScrollView>
             <TextView
-                android:visibility="gone"
                 android:id="@+id/pageCount"
                 android:layout_gravity="center|bottom"
                 android:elevation="2dp"

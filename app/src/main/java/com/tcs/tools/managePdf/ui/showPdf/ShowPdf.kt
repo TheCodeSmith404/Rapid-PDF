@@ -54,14 +54,15 @@ class ShowPdf : Fragment() {
                 binding.pdfRenderer.initWithUri(file.uri)
                 binding.pdfRenderer.statusListener=object :PdfRendererView.StatusCallBack{
                     override fun onPageChanged(currentPage: Int, totalPage: Int) {
+                        Log.d("scrolling",currentPage.toString())
                         if (!scrolling) {
                             scrolling=true
                             Handler(Looper.getMainLooper()).postDelayed({
                                 binding.verticalSlider.post{
-                                    binding.verticalSlider.updateProgress(currentPageGlobal)
+                                    binding.verticalSlider.updateThumbPosition(currentPageGlobal)
                                     scrolling=false
                                 }
-                            },500)
+                            },100)
                         }else{
                             currentPageGlobal=currentPage+1
                         }

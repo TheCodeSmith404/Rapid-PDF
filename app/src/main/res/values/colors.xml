@@ -4,6 +4,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="card_background">#FFFFFFFF</color>
+    <color name="tv_background">#FFDDDDDD</color>
     <color name="grey">#FF333333</color>
     <color name="purple50">#FF6D28D9</color>
     <color name="light_gray">#FFDDDDDD</color>

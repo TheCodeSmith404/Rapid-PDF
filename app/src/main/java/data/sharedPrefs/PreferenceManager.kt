@@ -26,7 +26,7 @@ class PreferenceManager(context: Context) {
                 sharedPreferences.edit().putBoolean("fav_list",value).apply()
         }
     var hideLeftRight:Boolean
-        get()=sharedPreferences.getBoolean("hide_left_right",false)
+        get()=sharedPreferences.getBoolean("hide_left_right",true)
         set(value){
             sharedPreferences.edit().putBoolean("hide_left_right",value).apply()
         }
