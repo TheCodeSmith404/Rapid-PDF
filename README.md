@@ -1,6 +1,6 @@
 # RapidPDF - Simplify Your PDF Management
 
-![RapidPDF Logo](logo.png)
+![RapidPDF Logo](assets/logo.png)
 
 **RapidPDF** is a fast and efficient PDF management tool designed to streamline your workflow. Whether you're a student, professional, or frequent PDF user, RapidPDF helps you stay organized with powerful yet easy-to-use features.
 
